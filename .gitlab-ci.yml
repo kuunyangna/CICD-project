@@ -11,7 +11,7 @@ build:
   stage: build
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - echo "Building project..."
+    - echo "🔧 Building project..."
     - mvn $MAVEN_CLI_OPTS clean package -DskipTests
   artifacts:
     paths:
@@ -23,8 +23,10 @@ test:
   stage: test
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - echo "Running tests..."
+    - echo "🧪 Running tests..."
     - mvn test
+  dependencies:
+    - build
   only:
     - main
 
@@ -33,10 +35,14 @@ deploy:
   image: docker:latest
   services:
     - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
   script:
-    - echo "Logging into Docker Hub..."
+    - echo "🚀 Logging into Docker Hub..."
     - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - echo "📦 Building Docker image..."
     - docker build -t $DOCKER_IMAGE:latest .
+    - echo "📤 Pushing image to Docker Hub..."
     - docker push $DOCKER_IMAGE:latest
   only:
     - main
