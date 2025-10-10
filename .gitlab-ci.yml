@@ -5,7 +5,7 @@ stages:
 
 variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
-  DOCKER_IMAGE: your-dockerhub-username/my-java-app
+  DOCKER_IMAGE: kuunyangna/my-java-app
 
 build:
   stage: build
