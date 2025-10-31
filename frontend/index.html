@@ -1,0 +1,32 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tetrix — My Tetris</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1>Tetrix</h1>
+    <div class="scoreboard">
+      <div>Score: <span id="score">0</span></div>
+      <div>Level: <span id="level">1</span></div>
+      <div>Lines: <span id="lines">0</span></div>
+    </div>
+    <canvas id="board" width="240" height="480"></canvas>
+    <div class="controls">
+      <button id="start">Start</button>
+      <button id="pause">Pause</button>
+      <div class="hint">Use ← → ↓ ↑ / Z / X / Space</div>
+    </div>
+    <div class="next">
+      <h3>Next</h3>
+      <canvas id="next" width="80" height="80"></canvas>
+    </div>
+  </div>
+
+  <script src="tetris.js"></script>
+</body>
+</html>
