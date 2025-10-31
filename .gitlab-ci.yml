@@ -13,7 +13,7 @@ build:
   stage: build
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - echo "🔧 Building project..."
+    - echo " Building project..."
     - mvn clean package -DskipTests
   artifacts:
     paths:
@@ -25,7 +25,7 @@ test:
   stage: test
   image: maven:3.9.6-eclipse-temurin-17
   script:
-    - echo "🧪 Running tests..."
+    - echo "Running tests..."
     - mvn test
   dependencies:
     - build
@@ -40,11 +40,11 @@ docker-deploy:
   variables:
     DOCKER_DRIVER: overlay2
   script:
-    - echo "🚀 Logging into Docker Hub..."
+    - echo "Logging into Docker Hub..."
     - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    - echo "📦 Building Docker image..."
+    - echo "Building Docker image..."
     - docker build -t $DOCKER_IMAGE:latest .
-    - echo "📤 Pushing image to Docker Hub..."
+    - echo "Pushing image to Docker Hub..."
     - docker push $DOCKER_IMAGE:latest
   only:
     - main
@@ -58,11 +58,9 @@ eks-deploy:
     - unzip awscliv2.zip
     - ./aws/install
     - aws --version
-    # configure AWS credentials
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_DEFAULT_REGION
-    # get kubeconfig for EKS
     - aws eks update-kubeconfig --name my-eks-cluster --region $AWS_DEFAULT_REGION --kubeconfig $KUBE_CONFIG_PATH
     - export KUBECONFIG=$KUBE_CONFIG_PATH
   script:
