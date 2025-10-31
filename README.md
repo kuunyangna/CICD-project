@@ -1,93 +1,74 @@
-# my pro
+# GitLab CI/CD Pipeline with Docker Hub, Amazon EKS, Prometheus and Grafana
+
+This project demonstrates a complete DevOps automation pipeline built with GitLab CI/CD, Docker, and Amazon EKS, with monitoring 
+and observability provided by Prometheus and Grafana. It covers containerization, continuous integration, continuous deployment, and cloud-native monitoring.
 
 
+## Overview
 
-## Getting started
+The pipeline automates the entire software delivery process, from code commit to production deployment. 
+It builds, tests, pushes, and deploys Docker images to an EKS cluster using GitLab CI/CD.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Core tools and technologies:
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- CI/CD: GitLab CI  
+- Containerization: Docker  
+- Artifact Repository: Docker Hub  
+- Orchestration: Amazon Elastic Kubernetes Service (EKS)  
+- Monitoring: Prometheus and Grafana  
+- Language or Framework: specify your application type (for example, Node.js, Python, or React)
 
-## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Pipeline Stages
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/aquila_king-group/my-pro.git
-git branch -M main
-git push -uf origin main
-```
+1. Build – Packages the application into a Docker image using a multi-stage Dockerfile.  
+2. Test – Runs unit and integration tests to verify the build.  
+3. Push – Uploads the Docker image to Docker Hub with automated version tagging.  
+4. Deploy – Deploys the container to Amazon EKS using Kubernetes manifests.
 
-## Integrate with your tools
+Each stage runs automatically on every code commit to ensure reliable and consistent deployments.
 
-- [ ] [Set up project integrations](https://gitlab.com/aquila_king-group/my-pro/-/settings/integrations)
 
-## Collaborate with your team
+## Repository Structure
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+| File or Directory | Description |
 
-## Test and Deploy
+ .gitlab-ci.yml   GitLab CI/CD pipeline configuration 
+ Dockerfile       Multi-stage Docker build definition 
+ k8s              Kubernetes deployment and service manifests 
+ prometheus       Prometheus configuration files 
+ grafana          Grafana data source and dashboard configuration 
 
-Use the built-in continuous integration in GitLab.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Deployment Workflow
 
-***
+1. A developer pushes code to the GitLab repository.  
+2. The GitLab Runner triggers the CI/CD pipeline.  
+3. The pipeline builds and tags the Docker image, then pushes it to Docker Hub.  
+4. The deployment job applies Kubernetes manifests to the EKS cluster.  
+5. Prometheus scrapes metrics from running pods and cluster components.  
+6. Grafana displays the metrics in dashboards for performance monitoring.
 
-# Editing this README
+This workflow provides continuous delivery and real-time visibility into system health.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
 
-## Suggestions for a good README
+## Monitoring and Observability
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Prometheus is deployed using Helm and configured to collect metrics from Kubernetes components and workloads.  
+Grafana connects to Prometheus as a data source to visualize performance metrics such as CPU and memory usage.  
+Alerting rules can be added in Prometheus for proactive system monitoring.
 
-## Name
-Choose a self-explaining name for your project.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Future Enhancements
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+- Integrate IAM Roles for Service Accounts (IRSA) to improve security and access control.  
+- Add Helm charts for version-controlled and repeatable deployments.  
+- Configure Slack or email notifications for pipeline results.  
+- Extend monitoring with custom application-level metrics.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Author
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Aquila Kuunyangna
+DevOps Engineer | 3x AWS Certified | Cloud and Automation Enthusiast  
+LinkedIn: [https://www.linkedin.com/in/aquila-kuunyangna-32a412195](https://www.linkedin.com/in/aquila-kuunyangna-32a412195)
