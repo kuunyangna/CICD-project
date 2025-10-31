@@ -1,13 +1,12 @@
 # GitLab CI/CD Pipeline with Docker Hub, Amazon EKS, Prometheus and Grafana
 
-This project demonstrates a complete DevOps automation pipeline built with GitLab CI/CD, Docker, and Amazon EKS, with monitoring 
-and observability provided by Prometheus and Grafana. It covers containerization, continuous integration, continuous deployment, and cloud-native monitoring.
+This project demonstrates a complete DevOps automation pipeline built with GitLab CI/CD, Docker, and Amazon EKS, with monitoring and observability provided by Prometheus and Grafana. It covers containerization, continuous integration, continuous deployment, and cloud-native monitoring.
 
+---
 
 ## Overview
 
-The pipeline automates the entire software delivery process, from code commit to production deployment. 
-It builds, tests, pushes, and deploys Docker images to an EKS cluster using GitLab CI/CD.
+The pipeline automates the entire software delivery process, from code commit to production deployment. It builds, tests, pushes, and deploys Docker images to an EKS cluster using GitLab CI/CD.
 
 Core tools and technologies:
 
@@ -18,6 +17,7 @@ Core tools and technologies:
 - Monitoring: Prometheus and Grafana  
 - Language or Framework: specify your application type (for example, Node.js, Python, or React)
 
+---
 
 ## Pipeline Stages
 
@@ -28,17 +28,19 @@ Core tools and technologies:
 
 Each stage runs automatically on every code commit to ensure reliable and consistent deployments.
 
+---
 
 ## Repository Structure
 
 | File or Directory | Description |
+|-------------------|-------------|
+| .gitlab-ci.yml | GitLab CI/CD pipeline configuration |
+| Dockerfile | Multi-stage Docker build definition |
+| k8s/ | Kubernetes deployment and service manifests |
+| prometheus/ | Prometheus configuration files |
+| grafana/ | Grafana data source and dashboard configuration |
 
- .gitlab-ci.yml   GitLab CI/CD pipeline configuration 
- Dockerfile       Multi-stage Docker build definition 
- k8s              Kubernetes deployment and service manifests 
- prometheus       Prometheus configuration files 
- grafana          Grafana data source and dashboard configuration 
-
+---
 
 ## Deployment Workflow
 
@@ -51,6 +53,7 @@ Each stage runs automatically on every code commit to ensure reliable and consis
 
 This workflow provides continuous delivery and real-time visibility into system health.
 
+---
 
 ## Monitoring and Observability
 
@@ -58,6 +61,7 @@ Prometheus is deployed using Helm and configured to collect metrics from Kuberne
 Grafana connects to Prometheus as a data source to visualize performance metrics such as CPU and memory usage.  
 Alerting rules can be added in Prometheus for proactive system monitoring.
 
+---
 
 ## Future Enhancements
 
@@ -66,6 +70,7 @@ Alerting rules can be added in Prometheus for proactive system monitoring.
 - Configure Slack or email notifications for pipeline results.  
 - Extend monitoring with custom application-level metrics.
 
+---
 
 ## Author
 
