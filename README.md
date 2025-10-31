@@ -94,15 +94,3 @@ DevOps Engineer | **3x AWS Certified** | Cloud and Automation Enthusiast
 
 ---
 
-###  How to Add the Images
-
-1. Create a folder named `images` in your project root.  
-2. Save and rename the screenshots as:
-   - `gitlab-pipeline.png`
-   - `grafana-dashboard.png`
-   - `eks-app.png`
-3. Run:
-   ```bash
-   git add README.md images/
-   git commit -m "Added screenshots and updated README"
-   git push origin main
