@@ -1,10 +1,13 @@
+
 stages:
   - build
   - test
   - deploy
+  - deploy-eks
 
 variables:
   DOCKER_IMAGE: kuunyangna/my-java-app
+  KUBE_CONFIG_PATH: /tmp/kubeconfig
 
 build:
   stage: build
@@ -29,7 +32,7 @@ test:
   only:
     - main
 
-deploy:
+docker-deploy:
   stage: deploy
   image: docker:latest
   services:
@@ -43,5 +46,29 @@ deploy:
     - docker build -t $DOCKER_IMAGE:latest .
     - echo "📤 Pushing image to Docker Hub..."
     - docker push $DOCKER_IMAGE:latest
+  only:
+    - main
+
+eks-deploy:
+  stage: deploy-eks
+  image: bitnami/kubectl:latest
+  before_script:
+    - apk add --no-cache curl
+    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    - unzip awscliv2.zip
+    - ./aws/install
+    - aws --version
+    # configure AWS credentials
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_DEFAULT_REGION
+    # get kubeconfig for EKS
+    - aws eks update-kubeconfig --name my-eks-cluster --region $AWS_DEFAULT_REGION --kubeconfig $KUBE_CONFIG_PATH
+    - export KUBECONFIG=$KUBE_CONFIG_PATH
+  script:
+    - echo "🚀 Deploying to EKS..."
+    - kubectl apply -f k8s/deployment.yaml
+    - kubectl apply -f k8s/service.yaml
+    - kubectl rollout status deployment/my-java-app
   only:
     - main
