@@ -53,20 +53,6 @@ This provides continuous delivery and real-time system visibility.
 
 ---
 
-##  Pipeline and Monitoring Screenshots  
-
-###  GitLab CI/CD Pipeline  
-![GitLab CI/CD Pipeline](./images/gitlab-pipeline.png)
-
-###  Kubernetes Cluster Monitoring (Grafana)  
-![Grafana Dashboard](./images/grafana-dashboard.png)
-
-###  Application Running on EKS  
-![EKS Application](./images/eks-app.png)
-
-> Screenshots illustrate successful CI/CD automation, container deployment, and monitoring setup.
-
----
 
 ##  Monitoring and Observability
 
