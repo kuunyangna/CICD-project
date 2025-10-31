@@ -4,76 +4,98 @@ This project demonstrates a complete DevOps automation pipeline built with GitLa
 
 ---
 
-## Overview
+##  Overview
 
 The pipeline automates the entire software delivery process, from code commit to production deployment. It builds, tests, pushes, and deploys Docker images to an EKS cluster using GitLab CI/CD.
 
-Core tools and technologies:
-
-- CI/CD: GitLab CI  
-- Containerization: Docker  
-- Artifact Repository: Docker Hub  
-- Orchestration: Amazon Elastic Kubernetes Service (EKS)  
-- Monitoring: Prometheus and Grafana  
-- Language or Framework: specify your application type (for example, Node.js, Python, or React)
+### Core Tools and Technologies
+- **CI/CD:** GitLab CI  
+- **Containerization:** Docker  
+- **Artifact Repository:** Docker Hub  
+- **Orchestration:** Amazon Elastic Kubernetes Service (EKS)  
+- **Monitoring:** Prometheus and Grafana  
 
 ---
 
-## Pipeline Stages
+##  Pipeline Stages
 
-1. Build – Packages the application into a Docker image using a multi-stage Dockerfile.  
-2. Test – Runs unit and integration tests to verify the build.  
-3. Push – Uploads the Docker image to Docker Hub with automated version tagging.  
-4. Deploy – Deploys the container to Amazon EKS using Kubernetes manifests.
+1. **Build** – Packages the application into a Docker image using a multi-stage Dockerfile.  
+2. **Test** – Runs unit and integration tests.  
+3. **Push** – Uploads the Docker image to Docker Hub with automated version tagging.  
+4. **Deploy** – Deploys the container to Amazon EKS using Kubernetes manifests.
 
-Each stage runs automatically on every code commit to ensure reliable and consistent deployments.
-
----
-
-## Repository Structure
-
-| File or Directory | Description |
-|-------------------|-------------|
-| .gitlab-ci.yml | GitLab CI/CD pipeline configuration |
-| Dockerfile | Multi-stage Docker build definition |
-| k8s/ | Kubernetes deployment and service manifests |
-| prometheus/ | Prometheus configuration files |
-| grafana/ | Grafana data source and dashboard configuration |
+Each stage runs automatically on every code commit for reliable, consistent deployments.
 
 ---
 
-## Deployment Workflow
+## 📂 Repository Structure
 
-1. A developer pushes code to the GitLab repository.  
-2. The GitLab Runner triggers the CI/CD pipeline.  
-3. The pipeline builds and tags the Docker image, then pushes it to Docker Hub.  
-4. The deployment job applies Kubernetes manifests to the EKS cluster.  
-5. Prometheus scrapes metrics from running pods and cluster components.  
-6. Grafana displays the metrics in dashboards for performance monitoring.
-
-This workflow provides continuous delivery and real-time visibility into system health.
-
----
-
-## Monitoring and Observability
-
-Prometheus is deployed using Helm and configured to collect metrics from Kubernetes components and workloads.  
-Grafana connects to Prometheus as a data source to visualize performance metrics such as CPU and memory usage.  
-Alerting rules can be added in Prometheus for proactive system monitoring.
+| File/Directory | Description |
+|----------------|-------------|
+| `.gitlab-ci.yml` | GitLab CI/CD pipeline configuration |
+| `Dockerfile` | Multi-stage Docker build definition |
+| `k8s/` | Kubernetes deployment and service manifests |
+| `prometheus/` | Prometheus configuration files |
+| `grafana/` | Grafana data source and dashboard configuration |
 
 ---
 
-## Future Enhancements
+##  Deployment Workflow
 
-- Integrate IAM Roles for Service Accounts (IRSA) to improve security and access control.  
-- Add Helm charts for version-controlled and repeatable deployments.  
-- Configure Slack or email notifications for pipeline results.  
-- Extend monitoring with custom application-level metrics.
+1. Developer pushes code to GitLab.  
+2. GitLab Runner triggers the CI/CD pipeline.  
+3. The pipeline builds and pushes the Docker image to Docker Hub.  
+4. Deployment applies manifests to the EKS cluster.  
+5. Prometheus scrapes metrics from workloads.  
+6. Grafana visualizes performance data and metrics.
+
+This provides continuous delivery and real-time system visibility.
 
 ---
 
-## Author
+##  Pipeline and Monitoring Screenshots  
 
-Aquila Kuunyangna
-DevOps Engineer | 3x AWS Certified | Cloud and Automation Enthusiast  
-LinkedIn: [https://www.linkedin.com/in/aquila-kuunyangna-32a412195](https://www.linkedin.com/in/aquila-kuunyangna-32a412195)
+###  GitLab CI/CD Pipeline  
+![GitLab CI/CD Pipeline](./images/gitlab-pipeline.png)
+
+###  Kubernetes Cluster Monitoring (Grafana)  
+![Grafana Dashboard](./images/grafana-dashboard.png)
+
+###  Application Running on EKS  
+![EKS Application](./images/eks-app.png)
+
+> Screenshots illustrate successful CI/CD automation, container deployment, and monitoring setup.
+
+---
+
+##  Monitoring and Observability
+
+Prometheus collects metrics from Kubernetes components and pods.  
+Grafana visualizes CPU, memory, and network metrics, enabling observability into cluster health.
+
+Alerting rules can also be added for proactive monitoring.
+
+---
+
+##  Future Enhancements
+
+- Add **IAM Roles for Service Accounts (IRSA)** for better security  
+- Deploy with **Helm charts** for version-controlled releases  
+- Integrate **Slack or email notifications** for pipeline results  
+- Extend monitoring with **application-level metrics**
+
+---
+
+##  Author
+
+**Aquila Kuunyangna**  
+DevOps Engineer | **3x AWS Certified** | Cloud and Automation Enthusiast  
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/aquila-kuunyangna-32a412195)
+
+---
+
+3. Run:
+   ```bash
+   git add README.md images/
+   git commit -m "Added screenshots and updated README"
+   git push origin main
