@@ -1,24 +1,17 @@
+GitLab CI/CD Pipeline with Docker Hub, Amazon EKS, Prometheus & Grafana
 
-Absolutely! I’ve updated your README Markdown so that both GitLab CI/CD variables and repository structure are fully tabulated and easy to read. The rest of the content is kept intact.
-# GitLab CI/CD Pipeline with Docker Hub, Amazon EKS, Prometheus & Grafana
+📋 Project Overview
 
-## 📋 Project Overview
+A complete DevOps automation pipeline implementing modern CI/CD practices with full monitoring stack.
 
-A **complete DevOps automation pipeline** implementing modern CI/CD practices with full monitoring stack.
+🏗️ Architecture Flow
 
----
+GitLab CI/CD → Docker Hub → Amazon EKS → Prometheus/Grafana Monitoring
 
-## 🏗️ Architecture Flow
+🔄 Pipeline Stages
 
-**GitLab CI/CD → Docker Hub → Amazon EKS → Prometheus/Grafana Monitoring**
+1️⃣ Build Stage
 
----
-
-## 🔄 Pipeline Stages
-
-### 1️⃣ Build Stage
-
-```bash
 mvn clean package -DskipTests
 Tool: Maven 3.9.6
 Output: Java .jar package
