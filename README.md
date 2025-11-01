@@ -1,4 +1,3 @@
-
 GitLab CI/CD Pipeline with Docker Hub, Amazon EKS, Prometheus & Grafana
 
 📋 Project Overview
