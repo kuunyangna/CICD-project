@@ -1,127 +1,154 @@
 GitLab CI/CD Pipeline with Docker Hub, Amazon EKS, Prometheus & Grafana
 
-This project demonstrates a complete DevOps automation pipeline built with GitLab CI/CD, Docker, and Amazon EKS, with monitoring and observability provided by Prometheus and Grafana.
+📋 Project Overview
 
-🚀 Overview
+A complete DevOps automation pipeline implementing modern CI/CD practices with full monitoring stack.
 
-The pipeline automates the software delivery process from code commit to production deployment.
-
-Pipeline Stages
-
-Build – Maven builds the Java project and packages the .jar file
-Test – Maven runs unit tests
-Docker Deploy – Builds Docker image and pushes to Docker Hub
-EKS Cluster Setup & App Deploy – Creates EKS cluster and deploys container
-Monitoring – Deploys Prometheus and Grafana using Helm
-Prerequisites
-
-GitLab Account with repository
-Docker Hub Account
-AWS Account with appropriate permissions
-GitLab Runner with Docker support
-Helm
-GitLab CI/CD Variables
-
-Set in Settings → CI/CD → Variables:
-
-Variable	Purpose
-DOCKER_USERNAME	Docker Hub username
-DOCKER_PASSWORD	Docker Hub password/token
-AWS_ACCESS_KEY_ID	AWS IAM key with EKS permissions
-AWS_SECRET_ACCESS_KEY	AWS IAM secret key
-AWS_DEFAULT_REGION	AWS region for EKS cluster
-EKS_CLUSTER_NAME	Name of EKS cluster
-
-Repository Structure
+🏗️ Architecture Flow
 
 text
-├── .gitlab-ci.yml          # Pipeline configuration
-├── Dockerfile              # Multi-stage Docker build
-├── k8s/                    # Kubernetes manifests
-│   ├── deployment.yaml
-│   └── service.yaml
-├── prometheus/             # Helm config for Prometheus
-├── grafana/                # Helm config for Grafana
-└── docs/
-    └── architecture.png    # Architecture diagram
-🔄 Pipeline Workflow
+GitLab CI/CD → Docker Hub → Amazon EKS → Prometheus/Grafana Monitoring
+🔄 Pipeline Stages
 
-1️⃣ Build Stage
+1. Build Stage
 
 bash
 mvn clean package -DskipTests
-2️⃣ Test Stage
+Tool: Maven 3.9.6
+Output: Java .jar package
+2. Test Stage
 
 bash
 mvn test
-3️⃣ Docker Deploy Stage
+Purpose: Unit testing
+Framework: Maven Surefire
+3. Docker Deploy Stage
 
 bash
 docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 docker build -t $DOCKER_IMAGE:latest frontend/
 docker push $DOCKER_IMAGE:latest
-4️⃣ EKS Cluster Setup
-
-Create EKS cluster (one-time setup):
+Registry: Docker Hub
+Service: Docker-in-Docker (dind)
+4. EKS Cluster Setup & Deployment
 
 bash
+# Cluster Creation
 aws eks create-cluster \
   --name $EKS_CLUSTER_NAME \
   --region $AWS_DEFAULT_REGION \
   --role-arn <EKS_IAM_ROLE_ARN> \
   --resources-vpc-config subnetIds=<SUBNET_IDS>,securityGroupIds=<SECURITY_GROUP_IDS>
-Configure kubectl:
 
-bash
-aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_DEFAULT_REGION --kubeconfig $KUBE_CONFIG_PATH
-export KUBECONFIG=$KUBE_CONFIG_PATH
-kubectl get nodes
-
-Deploy Application to EKS
-
-bash
+# Kubernetes Configuration
+aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_DEFAULT_REGION
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
-kubectl rollout status deployment/my-java-app
-
-Monitoring Stage
-
-Add Helm repos:
+5. Monitoring Stage
 
 bash
+# Helm Setup
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-Deploy monitoring stack:
 
-bash
+# Deployment
 helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
 helm install grafana grafana/grafana --namespace monitoring
-Access Grafana:
 
-bash
+# Access
 kubectl port-forward svc/grafana 3000:80 -n monitoring
+⚙️ Configuration
+
+Prerequisites
+
+Requirement	Purpose
+GitLab Account	CI/CD Pipeline
+Docker Hub Account	Container Registry
+AWS Account	EKS Cluster
+GitLab Runner	Pipeline Execution
+Helm	Package Management
+Environment Variables
+
+Variable	Description	Required
+DOCKER_USERNAME	Docker Hub username	✅
+DOCKER_PASSWORD	Docker Hub password/token	✅
+AWS_ACCESS_KEY_ID	AWS IAM access key	✅
+AWS_SECRET_ACCESS_KEY	AWS IAM secret key	✅
+AWS_DEFAULT_REGION	AWS region for EKS	✅
+EKS_CLUSTER_NAME	EKS cluster name	✅
+📁 Repository Structure
+
+text
+project-root/
+├── .gitlab-ci.yml              # Pipeline configuration
+├── Dockerfile                  # Multi-stage Docker build
+├── k8s/                        # Kubernetes manifests
+│   ├── deployment.yaml         # Application deployment
+│   └── service.yaml           # Kubernetes service
+├── prometheus/                 # Prometheus configuration
+│   └── values.yaml            # Helm values
+├── grafana/                    # Grafana configuration
+│   └── dashboard.yaml         # Custom dashboards
+└── docs/
+    └── architecture.png       # System architecture
+🛠️ Technology Stack
+
+CI/CD & Orchestration
+
+GitLab CI/CD - Pipeline automation
+Docker - Containerization
+Amazon EKS - Kubernetes orchestration
+Helm - Kubernetes package management
 Monitoring & Observability
 
-Prometheus: Metrics collection and storage
-Grafana: Visualization and dashboards
-Default Dashboards: Kubernetes cluster metrics and application monitoring
-Technologies Used
+Prometheus - Metrics collection and storage
+Grafana - Visualization and dashboards
+Development
 
-GitLab CI/CD, Docker, Amazon EKS
-Helm, Prometheus, Grafana
-Maven, Kubernetes
-Notes
+Maven - Build automation
+Java - Application runtime
+Kubernetes - Container orchestration
+📊 Monitoring Features
 
-Ensure GitLab Runner supports Docker-in-Docker
-Replace AWS placeholders with your actual setup
-EKS cluster creation takes several minutes
-Monitor resource usage for Prometheus
+Prometheus Metrics
 
-Architecture Flow
+Kubernetes cluster metrics
+Application performance metrics
+Resource utilization
+Custom business metrics
+Grafana Dashboards
 
-GitLab CI/CD → Docker Hub → Amazon EKS → Prometheus/Grafana Monitoring
+Cluster health monitoring
+Application performance
+Resource usage trends
+Alerting and notifications
+⚠️ Important Notes
 
+Cluster Considerations
+
+EKS cluster creation takes 10-15 minutes
+Ensure sufficient AWS service quotas
+Configure proper IAM roles and policies
+Security Best Practices
+
+Use IAM roles instead of access keys where possible
+Secure Docker Hub with access tokens
+Implement network policies in EKS
+Monitor resource usage for cost optimization
+Performance Tips
+
+Use appropriate instance types for EKS nodes
+Configure resource requests/limits in Kubernetes
+Monitor Prometheus storage requirements
+Implement log rotation and retention policies
+🚀 Quick Start
+
+Set up GitLab CI/CD variables
+Configure AWS credentials
+Run pipeline - automatic EKS creation
+Deploy monitoring stack
+Access Grafana at http://localhost:3000
 👨‍💻 Author
 
 Aquila Kuunyangna
