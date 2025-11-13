@@ -146,7 +146,7 @@ This shows the end-to-end DevOps automation and monitoring setup.
 
 ## Author
 
-**Aquila Kuunyangna**  
+Aquila Kuunyangna
 DevOps Engineer | 3x AWS Certified | Cloud and Automation Enthusiast  
 
 [LinkedIn Profile](https://www.linkedin.com/in/kuunyangna)
